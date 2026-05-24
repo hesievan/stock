@@ -1,0 +1,16 @@
+# 数据源
+tushare>=1.4.0
+akshare>=1.10.0
+
+# 数据处理
+pandas>=1.5.0
+numpy>=1.24.0
+
+# 可视化（回测图表）
+matplotlib>=3.7.0
+
+# 邮件发送
+yagmail>=0.15.0
+
+# 网络请求（备用）
+requests>=2.28.0

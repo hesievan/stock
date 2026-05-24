@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Data (committed — these SHOULD be tracked)
+# data/raw/*.csv  # 原始数据应提交
+# data/index_history.csv
+
+# Temp
+*.tmp
+*.log
+.DS_Store
