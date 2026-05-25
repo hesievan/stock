@@ -95,12 +95,13 @@
 │   ├── index_history.csv       # 指数历史数据（主输出）
 │   └── backtest_results.csv    # 回测验证结果
 ├── docs/
-│   └── chart.png               # 热度指数走势图
+│   └── index.html              # HTML 报告（每日自动生成）
 ├── scripts/
 │   ├── config.py               # 全局配置
 │   ├── fetch_initial_hist.py   # 历史数据采集
 │   ├── calc_percentile.py      # 百分位计算
 │   ├── update_index.py         # 每日指数更新
+│   ├── generate_report.py      # HTML 报告生成
 │   ├── backtest.py             # 回测验证
 │   └── send_alert.py           # 邮件预警
 ├── requirements.txt
@@ -140,11 +141,23 @@ python scripts/backtest.py
 
 回测会：
 - 计算 2005-01-01 至今的每日指数
-- 生成走势图 `docs/chart.png`
 - 验证5个关键历史时间点的阈值
-- 输出回测报告
+- 输出回测报告 `data/backtest_results.csv`
 
-### 4️⃣ 每日更新（单日）
+### 4️⃣ 生成 HTML 报告
+
+```bash
+python scripts/generate_report.py
+```
+
+生成 `docs/index.html`，包含：
+- 当前指数大数字 + 热度等级
+- CSS 柱状走势图（带年份 x 轴）
+- 10 个指标百分位横向条
+- 历史统计数据面板
+- 自包含 HTML，无外部依赖，手机友好
+
+### 5️⃣ 每日更新（单日）
 
 ```bash
 # 计算今日指数
@@ -152,9 +165,12 @@ python scripts/update_index.py
 
 # 或指定日期
 python scripts/update_index.py --date 2024-01-15
+
+# 生成 HTML 报告
+python scripts/generate_report.py
 ```
 
-### 5️⃣ 邮件预警测试
+### 6️⃣ 邮件预警测试
 
 ```bash
 # 配置 SMTP
@@ -164,12 +180,14 @@ export SMTP_USER=your_email@qq.com
 export SMTP_PASS=your_auth_code
 export MAIL_TO=receiver@example.com
 
-# 测试预警（强制发送）
-python scripts/send_alert.py --force
-
-# 预览邮件内容
+# 预览邮件内容（HTML 报告）
 python scripts/send_alert.py --dry-run
+
+# 强制发送（无视触发条件）
+python scripts/send_alert.py --force
 ```
+
+邮件正文使用 `docs/index.html` 作为 HTML 正文，响应式布局，手机友好。
 
 ---
 
